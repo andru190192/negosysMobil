@@ -1,32 +1,185 @@
 <!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
 
-<html lang="es">
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
 
-<head>
-<title>Titulo de la web</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="estilos.css" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="alternate" title="Pozolería RSS" type="application/rss+xml" href="/feed.rss" />
-</head>
+    http://www.apache.org/licenses/LICENSE-2.0
 
-<body>
-    <header>
-       <h1>Mi sitio web</h1>
-       <p>Mi sitio web creado en html5</p>
-    </header>
-    <section>
-       <article>
-           <h2>Titilo de contenido<h2>
-           <p> Contenido (ademas de imagenes, citas, videos etc.) </p>
-       </article>
-    </section>
-    <aside>
-       <h3>Titulo de contenido</h3>
-           <p>contenido</p>
-    </aside>
-    <footer>
-        Creado por andress
-    </footer>
-</body>
-</html  
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="css/estilos.css" />
+        <link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.min.css" >
+        <link rel="stylesheet" href="jquery/jqueryMobile/jquery.mobile-1.4.4.min.css" type="text/css"/>
+        <title>NEGOSYS</title>
+    </head>
+    <body>
+
+        <div data-role="page" id="inicio">
+
+            <div data-role="header">
+                <h1>Redepronik</h1>
+
+            </div>
+
+            <div data-role="content">
+
+                <div class="centrar">
+                    <a href="/negosys/templates/home.jsf"><i
+                    class="fa fa-cog fa-spin fa-3x"></i><i
+                    class="fa fa-cog fa-spin fa-2x"
+                    style="position: relative; top: -20px; font-size: 1.5em !important;"></i><i
+                    class="fa fa-cog fa-spin fa-2x"
+                    style="position: relative; top: 5px; left: -20px; font-size: 1.5em !important;"></i></a>
+                </div>
+
+                <form id="formulario" >
+
+                        <label> Usuario </label>
+                        <input type="text" id="nombredeusuario" name="nombredeusuario">
+
+                        <label> Password </label>
+                        <input type="password" id="clave" name="clave" >
+
+                        <br>
+                        <input type="button" value="Login" id="botonLogin" onClick="mostrar()">
+
+                    </form>
+            </div>
+
+        </div>
+
+        <div data-role="page" id="home">
+
+            <div data-role="header">
+                <h1>Bienvenido</h1>
+            </div>
+
+            <div data-role="content">
+                <h2> Bienvenido a la aplicacion </h2>
+                <h3> Su usuario y password son válidos</h3>
+            </div>
+
+        </div>
+
+        <script src="jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="jquery/jqueryMobile/jquery.mobile-1.4.4.min.js" type="text/javascript"></script>
+
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript">
+
+
+        function mostrar(){
+            console.log("entre");
+            navigator.notification.alert("Phonegap esta trabajando");
+        }
+
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+
+        function onDeviceReady(){
+            console.log("entre");
+            navigator.notification.alert("Phonegap esta trabajando");
+        }
+
+            /*$('#formulario').submit(function() {
+
+
+                // recolecta los valores que inserto el usuario
+                var datosUsuario = $("#nombredeusuario").val()
+                var datosPassword = $("#clave").val()
+
+                archivoValidacion = "validacion_de_datos.php?jsoncallback=?"
+
+                $.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
+                .done(function(respuestaServer) {
+
+                    alert(respuestaServer.mensaje + "\nGenerado en: " + respuestaServer.hora + "\n" +respuestaServer.generador)
+
+                    if(respuestaServer.validacion == "ok"){
+
+                        /// si la validacion es correcta, muestra la pantalla "home"
+                        $.mobile.changePage("#home")
+
+                    }else{
+
+                      /// ejecutar una conducta cuando la validacion falla
+                      console.log("error usuario o clave incorrecto");
+                    }
+
+                })
+                return false;
+            })
+
+            // Espera a que PhoneGap se inicie
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Rellena la base de datos
+    //
+    function populateDB(tx) {
+        tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "Primera fila")');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Segunda fila")');
+    }
+
+    // Consulta a la base de datos
+    //
+    function queryDB(tx) {
+        tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+    }
+
+    // Función 'callback' con el resultado de la consulta
+    //
+    function querySuccess(tx, results) {
+        var len = results.rows.length;
+        console.log("Tabla DEMO: " + len + " filas encontradas.");
+        for (var i=0; i<len; i++){
+            console.log("Fila = " + i + " ID = " + results.rows.item(i).id + " Datos =  " + results.rows.item(i).data);
+        }
+    }
+
+    // Función 'callback' de error de transacción
+    //
+    function errorCB(err) {
+        console.log("Error procesando SQL: "+err.code);
+    }
+
+    // Función 'callback' de transacción correcta
+    //
+    function successCB() {
+        var db = window.openDatabase("Database", "1.0", "Demo PhoneGap", 200000);
+        db.transaction(queryDB, errorCB);
+    }
+
+    // PhoneGap esta listo
+    //
+    function onDeviceReady() {
+        var db = window.openDatabase("Database", "1.0", "Demo PhoneGap", 200000);
+        db.transaction(populateDB, errorCB, successCB);
+    }*/
+        </script>
+    </body>
+</html>
